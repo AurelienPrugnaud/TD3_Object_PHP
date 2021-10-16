@@ -1,23 +1,24 @@
 <?php
-class Subjects{
+class Subject{
+	private $id;
 	private $name;
 	private $duration;
 	private $description;
-	private $note;
-	const coefficient = 2;
+	private $coefficient;
 
 	/**
 	 * @param string $name
 	 * @param int $duration
 	 * @param string $description
-	 * @param int | float $note
+	 * @param int $coefficient
 	 */
-	public function __construct($name, $duration, $description, $note)
+	public function __construct($id='', $name='', $duration='', $description='', $coefficient='')
 	{
+		$this->id = $id;
 		$this->name = $name;
 		$this->duration = $duration;
 		$this->description = $description;
-		$this->note = $note;
+		$this->coefficient = $coefficient;
 	}
 
 	/**
@@ -69,24 +70,61 @@ class Subjects{
 	}
 
 	/**
-	 * @return float|int
+	 * @return string
 	 */
-	public function getNote()
+	public function getCoefficient()
 	{
-		return $this->note;
+		return $this->coefficient;
 	}
 
 	/**
-	 * @param float|int $note
+	 * @param int $coefficient
 	 */
-	public function setNote($note): void
+	public function setCoefficient($coefficient): void
 	{
-		$this->note = $note;
+		$this->coefficient = $coefficient;
 	}
 
-	public function coefficientCalculation($note) {
-		$noteCoefficient = $note * self::coefficient;
-		return $noteCoefficient;
+	public function getListSubject($dbc){
+		$sqlQuery = 'SELECT * FROM subject ORDER BY name';
+		$response = $dbc->query($sqlQuery);
+		$subjects = $response->fetchAll(PDO::FETCH_ASSOC);
+		return $subjects;
+	}
+
+	public function getSubject($dbc, $id){
+		//methode sans requete préparée
+		/*$sqlQuery = 'SELECT * FROM subject WHERE id = "'.$id.'"';
+		$response = $dbc->query($sqlQuery);
+		$subject = $response->fetch(PDO::FETCH_ASSOC);
+		return $subject;*/
+
+		//avec une requete préparée
+		$query = 'SELECT * FROM subject WHERE id = :id';
+		$sth = $dbc->prepare($query);
+		$sth->bindParam(':id', $id);
+		$sth->execute();
+		$subject = $sth->fetch();
+		return $subject;
+	}
+
+	public function modifySubject($dbc, $id, $name, $description, $duration, $coefficient){
+		$sqlQuery = 'UPDATE subject SET name = :name, description = :description, duration = :duration, coefficient = :coefficient WHERE id = :id';
+
+		$sth = $dbc->prepare($sqlQuery);
+
+		$sth->bindParam(':id', $id);
+		$sth->bindParam(':name', $name);
+		$sth->bindParam(':description', $description);
+		$sth->bindParam(':duration', $duration);
+		$sth->bindParam(':coefficient', $coefficient);
+
+		$sth->execute();
+	}
+
+	public function deleteSubject($dbc, $id){
+		$sqlQuery = "DELETE FROM subject WHERE subject.id = $id";
+		$dbc->query($sqlQuery);
 	}
 
 	public function addToList(&$tabSubjects) {

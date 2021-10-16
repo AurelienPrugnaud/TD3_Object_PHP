@@ -1,24 +1,19 @@
 <h2 class="text-center mb-3">Liste des matières</h2>
-<?php if(count($tabSubjects) > 0): ?>
+<?php
+    if(is_array($tabSubjects) AND count($tabSubjects)>0):
+?>
 	<table class="table mb-3 text-center">
 		<thead class="table-dark">
 		<td>Nom</td>
-		<td>Durée</td>
-		<td>Description</td>
-		<td>Note</td>
-		<td>Note avec coefficient</td>
-		<td>Actions</td>
+        <td>Actions</td>
 		</thead>
-		<?php foreach($tabSubjects as $index => $subject)  : ?>
+		<?php foreach($tabSubjects as $subject)  : ?>
 			<tr>
-				<td><?php echo $subject->getName() ?></td>
-				<td><?php echo $subject->getDuration() ?> heures</td>
-				<td><?php echo $subject->getDescription() ?></td>
-				<td><?php echo $subject->getNote() ?></td>
-				<td><?php echo $subject->coefficientCalculation($subject->getNote())?></td>
+				<td><?php echo $subject['name'] ?></td>
 				<td>
-					<a href="/subjectModify/<?php echo $index ?>" title="modifier" class="btn btn-warning me-3">Modifier</a>
-					<a href="/subjectDelete/<?php echo $index ?>" title="supprimer" class="btn btn-danger">Supprimer</a>
+                    <a href="/subjectDetail/<?php echo $subject['id'] ?>" title="detail" class="btn btn-outline-secondary">Detail</a>
+					<a href="/subjectModify/<?php echo $subject['id'] ?>" title="modifier" class="btn btn-outline-warning">Modifier</a>
+                    <a href="/subjectDelete/<?php echo $subject['id'] ?>" title="supprimer" class="btn btn-outline-danger">Supprimer</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>

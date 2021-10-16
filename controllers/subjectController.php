@@ -1,41 +1,23 @@
 <?php
+	require_once('models/Connexion.php');
 	require_once("models/SubjectModel.php");
 
-	$tabSubjects = array();
+	//faire un select avec une method
+	$subjects = new Subject();
+	$tabSubjects = $subjects->getListSubject($dbc);
 
-	$subjectAlgorithm = new Subjects('Algorithmique', '20', 'Cours d\'algorithmique', 11);
+	//faire un select
+	//$sqlQuery = "SELECT * FROM subject";
+	//$tabSubjects = $dbc->query($sqlQuery);
 
-	$subjectAlgorithm->addToList($tabSubjects);
+	//faire un select d'un seul élément
+	//$sqlWhereQuery = "SELECT * FROM subject WHERE name = 'Langage SQL'";
+	//$results = $dbc->query($sqlWhereQuery);
 
-	$subjectEnglish = new Subjects('Anglais', '30', 'Cours d\'anglais', 18);
-	$subjectEnglish->addToList($tabSubjects);
-
-	$subjectAngular = new Subjects('Angular', '120', 'Cours d\'angular', 12);
-	$subjectAngular->addToList($tabSubjects);
-
-	$subjectDataBase = new Subjects('BDD', '30', 'Cour sur les BDD', 12);
-	$subjectDataBase->addToList($tabSubjects);
-
-	$subjectServerDeployment = new Subjects('Déploiement serveur', '20', 'Cour sur le déploiement serveur', 8);
-	$subjectServerDeployment->addToList($tabSubjects);
-
-	$subjectJavascript = new Subjects('Javascript', '60', 'Cour de Javascript', 15);
-	$subjectJavascript->addToList($tabSubjects);
-
-	$subjectLinux = new Subjects('Linux', '30', 'Cour sur Linux', 8);
-	$subjectLinux->addToList($tabSubjects);
-
-	$subjectMockUp = new Subjects('Maquettage', '21', 'Cour sur le maquettage', 16);
-	$subjectMockUp->addToList($tabSubjects);
-
-	$subjectPhp = new Subjects('PHP', '60', 'Cour de PHP', 2);
-	$subjectPhp->addToList($tabSubjects);
-
-	$subjectScrum = new Subjects('SCRUM', '30', 'Cour sur SCRUM', 14);
-	$subjectScrum->addToList($tabSubjects);
-
-	$subjectStaticWeb = new Subjects('Web Statique', '60', 'Cour de web statique', 16);
-	$subjectStaticWeb->addToList($tabSubjects);
+	//insérer une nouvelle ligne dans la bdd
+	//$sqlAddQuery = "INSERT INTO subject (id, name, description, duration, coefficient) VALUES (?,?,?,?,?)";
+	//$results = $dbc->prepare($sqlAddQuery);
+	//$results->execute([NULL, 'Anglais', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis placerat nisi, quis malesuada lacus. Aliquam in dolor mauris. Integer vel cursus purus. Quisque tristique molestie magna, lobortis tristique nisl pharetra at. Suspendisse bibendum arcu ac arcu posuere mattis quis sit amet nisi. Morbi non metus sagittis, convallis orci eu, gravida magna. Aliquam eget erat eu ex ultrices sollicitudin at sit amet lectus. Sed tincidunt magna interdum mauris consectetur dictum. Mauris vitae nisl ac lacus mollis tempus et et diam.', 30, 2]);
 
 
 	$list = "subjectsList";

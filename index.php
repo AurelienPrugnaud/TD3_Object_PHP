@@ -11,7 +11,7 @@
 <body>
 <header>
 	<div class="bg-dark text-light mb-3 position-relative p-1">
-		<h1 class="text-center">PHP Object/accesseurs/constante/statique</h1>
+		<h1 class="text-center">PHP Object Data</h1>
 	</div></header>
 <main>
 	<div class="container">
@@ -19,11 +19,9 @@
             <a href="/subjectsList" class="link-dark" >Liste des matières</a>
         </div>
 		<?php
-		if(!empty($list)):
-			include("views/".$list.".php");
-        elseif(empty($list)):
-			include("views/errorPageNotFound.php");
-		endif;
+            if(!empty($list)):
+                include("views/".$list.".php");
+            endif;
 		?>
 	</div>
 </main>
