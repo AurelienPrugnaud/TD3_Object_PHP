@@ -28,7 +28,7 @@ class DataBase extends PDO{
 		{
 			$statement = $this->prepare($sqlQuery);
 			foreach ($array as $key => $value):
-				$statement->bindParam('$key', $value);
+				$statement->bindValue("$key", $value);
 			endforeach;
 			$statement->execute();
 			if(!empty($fetchMode) AND $fetchMode==PDO::FETCH_CLASS)
@@ -40,29 +40,16 @@ class DataBase extends PDO{
 	 * @param $sqlQuery
 	 * @param array $array
 	 */
-	public function modify($sqlQuery, $array = array())
+	public function modifyOrDeleteOrAdd($sqlQuery, $array = array())
 		{
 			$statement = $this->prepare($sqlQuery);
 			foreach ($array as $key => $value):
-				$statement->bindValue('$key', $value);
+				$statement->bindValue("$key", $value);
 			endforeach;
 			$statement->execute();
 		}
 
-	/**
-	 * @param $sqlQuery
-	 * @param array $array
-	 */
-	public function delete($sqlQuery, $array = array()){
-			$statement = $this->prepare($sqlQuery);
-			foreach ($array as $key => $value):
-				$statement->bindValue('$key', $value);
-			endforeach;
-			$statement->execute();
-		}
-	}
-
-/*	//0. Définition des variables de connexion à la BDD
+		/*	//0. Définition des variables de connexion à la BDD
 	$servername = 'localhost'; //en local : mettre localhost
 	$username = 'zarava';
 	$password = '270695CEDwwM';
@@ -85,7 +72,10 @@ class DataBase extends PDO{
 		//echo $e->getCode();
 
 		echo "Erreur de connexion à la base de données";
-	}*/
+}*/
+	}
+
+
 
 
 

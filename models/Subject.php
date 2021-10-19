@@ -218,7 +218,7 @@ class Subject{
 	{
 		$sqlQuery = 'INSERT INTO `subject` SET name = :name, description = :description, duration = :duration, coefficient = :coefficient';
 		$bindParam = array('name' => $name, 'description' => $description, 'duration' => $duration, 'coefficient' => $coefficient);
-		$subject = $dbc->select($sqlQuery, $bindParam);
+		$subject = $dbc->modifyOrDeleteOrAdd($sqlQuery, $bindParam);
 		return $subject;
 	}
 
@@ -257,8 +257,7 @@ class Subject{
 	{
 		$sqlQuery = 'UPDATE subject SET name = :name, description = :description, duration = :duration, coefficient = :coefficient WHERE id = :id';
 		$bindParam = array('id' => $id, 'name' => $name, 'description' => $description, 'duration' => $duration, 'coefficient' => $coefficient);
-		$subject = $dbc->modify($sqlQuery, $bindParam);
-
+		$subject = $dbc->modifyOrDeleteOrAdd($sqlQuery, $bindParam);
 		return $subject;
 	}
 
@@ -278,7 +277,7 @@ class Subject{
 	public static function deleteSubject($dbc, $id){
 		$sqlQuery = "DELETE FROM subject WHERE subject.id = $id";
 		$bindParam = array('id' => $id);
-		$dbc->delete($sqlQuery, $bindParam);
+		$dbc->modifyOrDeleteOrAdd($sqlQuery, $bindParam);
 	}
 
 	/**
