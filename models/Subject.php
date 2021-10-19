@@ -125,10 +125,11 @@ class Subject{
 	 * @return mixed
 	 */
 	 public static function getListSubject($dbc){
-		$sqlQuery = 'SELECT * FROM subject ORDER BY name';
+/*		$sqlQuery = 'SELECT * FROM subject ORDER BY name';
 		$response = $dbc->query($sqlQuery);
 		$subjects = $response->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-		return $subjects;
+		return $subjects;*/
+
 		//$tabSubject = array();
 
 		//foreach($subjects as $subject):
@@ -146,6 +147,10 @@ class Subject{
 			// array_push($aSubjectCollection, $sub);
 		//endforeach;
 		//return $tabSubject;
+
+		 $sqlQuery = 'SELECT * FROM subject ORDER BY name';
+		 $subjects = $dbc->selectAll($sqlQuery, PDO::FETCH_CLASS, __CLASS__);
+		 return $subjects;
 
 	}
 

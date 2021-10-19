@@ -36,6 +36,15 @@ class DataBase extends PDO{
 			return $statement->fetch();
 		}
 
+	public function selectAll($sqlQuery, $fetchMode = PDO::FETCH_ASSOC, $className = '')
+	{
+		$statement = $this->prepare($sqlQuery);
+		$statement->execute();
+		if(!empty($fetchMode) AND $fetchMode==PDO::FETCH_CLASS)
+			$statement->setFetchMode(PDO::FETCH_CLASS, $className);
+		return $statement->fetchAll();
+	}
+
 	/**
 	 * @param $sqlQuery
 	 * @param array $array
