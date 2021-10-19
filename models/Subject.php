@@ -179,6 +179,19 @@ class Subject{
 		$this->coefficient = $subject['coefficient'];*/
 	}
 
+	public function addSubject($dbc, $name, $description, $duration, $coefficient)
+	{
+		$query = 'INSERT INTO subject(name,description,duration,coefficient)
+                    VALUES ( :name, :description, :duration, :coefficient)';
+		$sth = $dbc->prepare($query);
+		$sth->bindParam(':name', $name);
+		$sth->bindParam(':description', $description);
+		$sth->bindParam(':duration', $duration);
+		$sth->bindParam(':coefficient', $coefficient);
+		$sth->execute();
+
+	}
+
 	/**
 	 * @param $dbc
 	 * @param $id

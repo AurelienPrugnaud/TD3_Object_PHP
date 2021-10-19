@@ -6,6 +6,18 @@
 			parent::__construct('mysql:host='.$DB_HOST.';dbname='.$DB_NAME.';charset=utf8', $DB_USER, $DB_PASS);
 
 		}
+
+		public function select($sql, $array = array(), $fetchMode = PDO::FETCH_CLASS)
+		{
+			$sth = $this->prepare($sql);
+
+			foreach ($array as $key => $value):
+				$sth->bindValue("$key", $value);
+			endforeach;
+
+			//Attention ce n'est pas terminé !
+
+		}
 	}
 
 /*	//0. Définition des variables de connexion à la BDD

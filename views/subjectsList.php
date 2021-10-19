@@ -1,6 +1,6 @@
 <h2 class="text-center mb-3">Liste des matières</h2>
 
-<a href="" title="ajouter" class="btn btn-outline-dark mb-3">Ajouter</a>
+<a href="/subjectAdd/" title="ajouter" class="btn btn-outline-dark mb-3">Ajouter</a>
 <?php
     if(is_array($tabSubjects) AND count($tabSubjects)>0):
 ?>

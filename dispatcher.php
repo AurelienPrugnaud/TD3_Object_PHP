@@ -18,6 +18,9 @@
 				case 'subjectDetail':
 					include('controllers/subjectDetailController.php');
 					break;
+				case 'subjectAdd':
+					include('controllers/subjectAddController.php');
+					break;
 				case 'subjectModify':
 					include('controllers/subjectFormController.php');
 					break;
