@@ -1,4 +1,6 @@
 <h2 class="text-center mb-3">Liste des matières</h2>
+
+<a href="" title="ajouter" class="btn btn-outline-dark mb-3">Ajouter</a>
 <?php
     if(is_array($tabSubjects) AND count($tabSubjects)>0):
 ?>
@@ -9,11 +11,11 @@
 		</thead>
 		<?php foreach($tabSubjects as $subject)  : ?>
 			<tr>
-				<td><?php echo $subject['name'] ?></td>
+				<td><?php echo $subject->getName(); ?></td>
 				<td>
-                    <a href="/subjectDetail/<?php echo $subject['id'] ?>" title="detail" class="btn btn-outline-secondary">Detail</a>
-					<a href="/subjectModify/<?php echo $subject['id'] ?>" title="modifier" class="btn btn-outline-warning">Modifier</a>
-                    <a href="/subjectDelete/<?php echo $subject['id'] ?>" title="supprimer" class="btn btn-outline-danger">Supprimer</a>
+                    <a href="/subjectDetail/<?php echo $subject->getId() ?>" title="detail" class="btn btn-outline-secondary">Detail</a>
+					<a href="/subjectModify/<?php echo$subject->getId() ?>" title="modifier" class="btn btn-outline-warning">Modifier</a>
+                    <a href="/subjectDelete/<?php echo $subject->getId() ?>" title="supprimer" class="btn btn-outline-danger">Supprimer</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>

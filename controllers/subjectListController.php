@@ -1,10 +1,6 @@
 <?php
-	require_once('models/Connexion.php');
-	require_once("models/SubjectModel.php");
-
 	//faire un select avec une method
-	$subjects = new Subject();
-	$tabSubjects = $subjects->getListSubject($dbc);
+	$tabSubjects = Subject::getListSubject($dbc);
 
 	//faire un select
 	//$sqlQuery = "SELECT * FROM subject";
