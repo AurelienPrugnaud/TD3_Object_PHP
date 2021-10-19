@@ -1,22 +1,64 @@
 <?php
-	class DataBase extends PDO{
 
-		public function __construct($DB_HOST, $DB_NAME, $DB_USER, $DB_PASS){
+/**
+ *
+ */
+class DataBase extends PDO{
 
+	/**
+	 * @param $DB_HOST
+	 * @param $DB_NAME
+	 * @param $DB_USER
+	 * @param $DB_PASS
+	 */
+	public function __construct($DB_HOST, $DB_NAME, $DB_USER, $DB_PASS){
+			//Equivalent à new PDO
 			parent::__construct('mysql:host='.$DB_HOST.';dbname='.$DB_NAME.';charset=utf8', $DB_USER, $DB_PASS);
 
 		}
 
-		public function select($sql, $array = array(), $fetchMode = PDO::FETCH_CLASS)
+	/**
+	 * @param $sqlQuery
+	 * @param array $array
+	 * @param int $fetchMode
+	 * @param string $className
+	 * @return mixed
+	 */
+	public function select($sqlQuery, $array = array(), $fetchMode = PDO::FETCH_ASSOC, $className = '')
 		{
-			$sth = $this->prepare($sql);
-
+			$statement = $this->prepare($sqlQuery);
 			foreach ($array as $key => $value):
-				$sth->bindValue("$key", $value);
+				$statement->bindParam('$key', $value);
 			endforeach;
+			$statement->execute();
+			if(!empty($fetchMode) AND $fetchMode==PDO::FETCH_CLASS)
+				$statement->setFetchMode(PDO::FETCH_CLASS, $className);
+			return $statement->fetch();
+		}
 
-			//Attention ce n'est pas terminé !
+	/**
+	 * @param $sqlQuery
+	 * @param array $array
+	 */
+	public function modify($sqlQuery, $array = array())
+		{
+			$statement = $this->prepare($sqlQuery);
+			foreach ($array as $key => $value):
+				$statement->bindValue('$key', $value);
+			endforeach;
+			$statement->execute();
+		}
 
+	/**
+	 * @param $sqlQuery
+	 * @param array $array
+	 */
+	public function delete($sqlQuery, $array = array()){
+			$statement = $this->prepare($sqlQuery);
+			foreach ($array as $key => $value):
+				$statement->bindValue('$key', $value);
+			endforeach;
+			$statement->execute();
 		}
 	}
 

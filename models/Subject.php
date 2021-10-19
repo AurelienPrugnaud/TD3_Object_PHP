@@ -161,14 +161,21 @@ class Subject{
 		$subject = $response->fetch(PDO::FETCH_ASSOC);
 		return $subject;*/
 
-		//avec une requete préparée
-		$query = 'SELECT * FROM subject WHERE id = :id';
-		$statement = $dbc->prepare($query);
+/*		//avec une requete préparée
+		$sqlQuery = 'SELECT * FROM subject WHERE id = :id';
+		$statement = $dbc->prepare($sqlQuery);
 		$statement->bindParam(':id', $id);
 		$statement->execute();
 		//$subject = $statement->fetch();
 
 		$subject = $statement->fetchObject(__CLASS__);
+		return $subject;*/
+
+		//version avec une requete preparée et la méthode select
+		$sqlQuery = 'SELECT * FROM subject WHERE id = :id';
+		$bindParam = array('id'=>$id);
+		$subject =  $dbc->select($sqlQuery,$bindParam, PDO::FETCH_CLASS, __CLASS__);
+
 		return $subject;
 
 		//Version 1 : On assigne à chaque propriété les valeurs recupérées dans le tableau (resultat de la requete)
@@ -179,17 +186,40 @@ class Subject{
 		$this->coefficient = $subject['coefficient'];*/
 	}
 
-	public function addSubject($dbc, $name, $description, $duration, $coefficient)
+	/**
+	 * @param $dbc
+	 * @param $name
+	 * @param $description
+	 * @param $duration
+	 * @param $coefficient
+	 */
+/*	public function addSubject($dbc, $name, $description, $duration, $coefficient)
 	{
-		$query = 'INSERT INTO subject(name,description,duration,coefficient)
+		$sqlQuery = 'INSERT INTO subject(name,description,duration,coefficient)
                     VALUES ( :name, :description, :duration, :coefficient)';
-		$sth = $dbc->prepare($query);
-		$sth->bindParam(':name', $name);
-		$sth->bindParam(':description', $description);
-		$sth->bindParam(':duration', $duration);
-		$sth->bindParam(':coefficient', $coefficient);
-		$sth->execute();
+		$statement = $dbc->prepare($sqlQuery);
+		$statement->bindParam(':name', $name);
+		$statement->bindParam(':description', $description);
+		$statement->bindParam(':duration', $duration);
+		$statement->bindParam(':coefficient', $coefficient);
+		$statement->execute();
 
+	}*/
+
+	/**
+	 * @param $dbc
+	 * @param $name
+	 * @param $description
+	 * @param $duration
+	 * @param $coefficient
+	 * @return mixed
+	 */
+	public static function addSubject($dbc, $name, $description, $duration, $coefficient)
+	{
+		$sqlQuery = 'INSERT INTO `subject` SET name = :name, description = :description, duration = :duration, coefficient = :coefficient';
+		$bindParam = array('name' => $name, 'description' => $description, 'duration' => $duration, 'coefficient' => $coefficient);
+		$subject = $dbc->select($sqlQuery, $bindParam);
+		return $subject;
 	}
 
 	/**
@@ -200,27 +230,55 @@ class Subject{
 	 * @param $duration
 	 * @param $coefficient
 	 */
-	public static function modifySubject($dbc, $id, $name, $description, $duration, $coefficient){
+/*	public static function modifySubject($dbc, $id, $name, $description, $duration, $coefficient){
 		$sqlQuery = 'UPDATE subject SET name = :name, description = :description, duration = :duration, coefficient = :coefficient WHERE id = :id';
 
-		$sth = $dbc->prepare($sqlQuery);
+		$statement = $dbc->prepare($sqlQuery);
 
-		$sth->bindParam(':id', $id);
-		$sth->bindParam(':name', $name);
-		$sth->bindParam(':description', $description);
-		$sth->bindParam(':duration', $duration);
-		$sth->bindParam(':coefficient', $coefficient);
+		$statement->bindParam(':id', $id);
+		$statement->bindParam(':name', $name);
+		$statement->bindParam(':description', $description);
+		$statement->bindParam(':duration', $duration);
+		$statement->bindParam(':coefficient', $coefficient);
 
-		$sth->execute();
+		$statement->execute();
+	}*/
+
+	/**
+	 * @param $dbc
+	 * @param $id
+	 * @param $name
+	 * @param $description
+	 * @param $duration
+	 * @param $coefficient
+	 * @return mixed
+	 */
+	public static function modifySubject($dbc, $id, $name, $description, $duration, $coefficient)
+	{
+		$sqlQuery = 'UPDATE subject SET name = :name, description = :description, duration = :duration, coefficient = :coefficient WHERE id = :id';
+		$bindParam = array('id' => $id, 'name' => $name, 'description' => $description, 'duration' => $duration, 'coefficient' => $coefficient);
+		$subject = $dbc->modify($sqlQuery, $bindParam);
+
+		return $subject;
 	}
 
 	/**
 	 * @param $dbc
 	 * @param $id
 	 */
-	public static function  deleteSubject($dbc, $id){
+/*	public static function  deleteSubject($dbc, $id){
 		$sqlQuery = "DELETE FROM subject WHERE subject.id = $id";
 		$dbc->query($sqlQuery);
+	}*/
+
+	/**
+	 * @param $dbc
+	 * @param $id
+	 */
+	public static function deleteSubject($dbc, $id){
+		$sqlQuery = "DELETE FROM subject WHERE subject.id = $id";
+		$bindParam = array('id' => $id);
+		$dbc->delete($sqlQuery, $bindParam);
 	}
 
 	/**
