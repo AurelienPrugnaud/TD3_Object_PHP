@@ -1,11 +1,7 @@
 <?php
 	require_once("models/autoLoad.php");
+	require_once("config/development.php");
 	//require_once("models/DataBase.php");
-
-	define('DB_HOST','localhost');
-	define('DB_USER','zarava');
-	define('DB_PASS','270695CEDwwM');
-	define('DB_NAME','php_pdo');
 
 	$dbc = new DataBase(DB_HOST,DB_NAME, DB_USER, DB_PASS);
 
